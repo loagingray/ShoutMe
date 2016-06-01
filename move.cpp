@@ -1,10 +1,25 @@
 #include "move.h"
 
 MyPosition me;
-
+GLint myfovy = 30;
+GLint fovy_x = 0;
 GLfloat Pi = 3.1415926536;
 GLfloat mouse_prex, mouse_prey;
 
+void fovy_control(int controller) {
+	if(controller == 1) {
+		myfovy = 40 / Pi * atan(0.3*fovy_x) + 30;
+	}
+	else if(controller == 0) {
+		myfovy = 30;
+	}
+	if(fovy_x >= 40) {
+		fovy_x = 40;
+	}
+	else if(fovy_x <= -40){
+		fovy_x = -40;
+	}
+}
 //相机的位置移动
 void MoveCamera(GLint forward, GLint leftright) {
 	me.now_x = me.now_x + forward*me.lx*0.1 + leftright*me.lz*0.1;		//相机的坐标的改变由视角方向前后左右移动值在该方向的投影决定
@@ -27,6 +42,12 @@ void KeyProcess(unsigned char key, int x, int y) {
 		MoveCamera(-5, 0); break;
 	case 'd':
 		MoveCamera(0, -5); break;
+	case 'c':
+		fovy_x -= 10; fovy_control(1); break;
+	case 'x':
+		fovy_x = 0;   fovy_control(0); break;
+	case 'z':
+		fovy_x += 10; fovy_control(1); break;
 	case  27:
 		exit(0); break;
 	default: break;
@@ -63,7 +84,7 @@ void MouseMove(int xMouse, int yMouse) {
 	if(me.y_rotate>3.0) me.y_rotate = 3.0;
 	else if(me.y_rotate<-1.0) me.y_rotate = -1.0;
 
-	me.angle += (xMouse - mouse_prex) / 300;
+	me.angle += (xMouse - mouse_prex) / 80;
 	RotateCamera(me.angle);
 
 	glutPostRedisplay();

@@ -27,6 +27,7 @@ struct MyPosition {
 	int score = 0;									//我的得分
 };
 
+extern GLint myfovy;
 extern MyPosition me;
 
 extern GLfloat Pi;

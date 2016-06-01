@@ -67,7 +67,7 @@ void display(void) {
 	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(30.0, (double)window_w / (double)window_h, 1.0, 100.0);
+	gluPerspective(myfovy, (double)window_w / (double)window_h, 1.0, 100.0);
 	//mylight();
 	gluLookAt(me.now_x, me.now_y, me.now_z, me.now_x + me.lx, me.y_rotate, me.now_z + me.lz, 0.0, 1.0, 0.0);
 
