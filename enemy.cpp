@@ -3,6 +3,7 @@
 const int enemy_num = 1;
 const int hit_rate = 80;
 Enemy enemy[enemy_num];
+GLuint enemy_texture;
 
 //初始化
 void enemy_init() {
@@ -15,9 +16,24 @@ void draw_enemy(Enemy this_enemy) {
 	glPushMatrix();
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 	glTranslatef((float)this_enemy.now_x, 0.0, (float)this_enemy.now_z);
-	if(!this_enemy.hit) glColor3f(1.0, 1.0, 0.0);
-	else glColor3f(1.0, 0.0, 0.0);
-	glutSolidSphere(this_enemy.width, 50, 50);
+	//if(!this_enemy.hit) glColor3f(1.0, 1.0, 0.0);
+	//else glColor3f(1.0, 0.0, 0.0);
+	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP); //增加纹理坐标自动生成及启用贴图功能
+	glEnable(GL_TEXTURE_GEN_S);
+	glEnable(GL_TEXTURE_GEN_T);
+	glEnable(GL_TEXTURE_2D);
+	if (!this_enemy.hit)
+	{
+		//glEnable(GL_TEXTURE_2D);
+		LoadGLTextures(enemy_texture, "test2.bmp");
+		glBindTexture(GL_TEXTURE_2D, enemy_texture);
+		glutSolidSphere(this_enemy.width, 50, 50);
+	}
+	else
+	{
+		//使物体消失
+	}
+
 	glPopAttrib();
 	glPopMatrix();
 }
